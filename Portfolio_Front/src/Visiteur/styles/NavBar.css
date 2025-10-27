@@ -1,0 +1,19 @@
+.navbar-custom {
+  background-color: #fa8fb3;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-nav li {
+  margin-right: 50px;
+}
+.navbar-nav a {
+  text-align: center;
+  size: 28px;
+  font-weight: bolder;
+  color: white;
+}
+.navbar-nav a:hover {
+  color: antiquewhite;
+}
