@@ -1,17 +1,14 @@
-import React from "react";
-import "../styles/Contact.css"
+import "../styles/Contact.css";
+import Button from "../Atom/Button";
 function Contact() {
   return (
-    <div >
-      <div >
+    
+      <div className="contact-container">
         <h1>Contactez-moi</h1>
-        <p >
-          Une question ? Un projet ? N'hésitez pas à me contacter !
-        </p>
+      
 
-        <form >
-          <div >
-            <label htmlFor="name">Nom complet *</label>
+        <form className="contact-form">
+          <div className="form-group">
             <input
               type="text"
               id="name"
@@ -21,8 +18,7 @@ function Contact() {
             />
           </div>
 
-          <div >
-            <label htmlFor="email">Email *</label>
+          <div className="form-group">
             <input
               type="email"
               id="email"
@@ -32,8 +28,7 @@ function Contact() {
             />
           </div>
 
-          <div >
-            <label htmlFor="subject">Sujet *</label>
+          <div className="form-group">
             <input
               type="text"
               id="subject"
@@ -43,8 +38,7 @@ function Contact() {
             />
           </div>
 
-          <div >
-            <label htmlFor="message">Message *</label>
+          <div className="form-group">
             <textarea
               id="message"
               name="message"
@@ -53,13 +47,10 @@ function Contact() {
               placeholder="Votre message..."
             />
           </div>
-
-          <button type="submit" >
-            Envoyer
-          </button>
+  <Button children="Envoyer" className="suggestion-btn" />
+         
         </form>
       </div>
-    </div>
   );
 }
 

@@ -1,16 +1,28 @@
-html, body, #root {
+html,
+body,
+#root {
   width: 100%;
- 
+
   font-family: "Liter", sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-
-.home{
+.home {
   display: flex;
   justify-content: center;
   padding: 0px;
- 
+}
+.page-content {
+  padding-top: 0px; 
+}
+.navbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: max-content;
+  z-index: 1000; /* ⚠️ IMPORTANT : Au-dessus de tout */
+  background: transparent;
+  backdrop-filter: blur(10px);
 }

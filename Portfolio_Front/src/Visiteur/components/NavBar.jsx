@@ -1,40 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
+import { Navbar, Nav, Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/NavBar.css";
+
 function NavBar() {
+  const [expanded, setExpanded] = useState(false);
+
   return (
-    <>
-      <header className="navbar-custom" >
-        <nav className="navbar navbar-expand-lg mt-3 ">
-         
-
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav ms-auto">
-              <li className="nav-item active">
-                <a className="nav-link" href="/">
-                  Home <span className="sr-only"></span>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/myProjects">
-                  Projects
-                </a>
-              </li>
-
-              <li className="nav-item">
-                <a className="nav-link" href="/aboutMe">About</a>
-              </li>
-
-              <li className="nav-item">
-                <a className="nav-link " href="/contactMe">
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </header>
-    </>
+    <Navbar 
+      expand="lg" 
+      className="navbar-custom mt-3" 
+      expanded={expanded}
+      onToggle={() => setExpanded(!expanded)}
+    >
+      <Container fluid>
+        <Navbar.Toggle 
+          aria-controls="navbarSupportedContent"
+          className="ms-auto" 
+        />
+        <Navbar.Collapse id="navbarSupportedContent">
+          <Nav className="ms-auto">
+            <Nav.Link href="/" onClick={() => setExpanded(false)}>
+              Home
+            </Nav.Link>
+            <Nav.Link href="/myProjects" onClick={() => setExpanded(false)}>
+              Projects
+            </Nav.Link>
+            <Nav.Link href="/aboutMe" onClick={() => setExpanded(false)}>
+              About
+            </Nav.Link>
+            <Nav.Link href="/contactMe" onClick={() => setExpanded(false)}>
+              Contact
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
 

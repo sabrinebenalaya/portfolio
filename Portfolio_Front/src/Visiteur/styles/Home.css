@@ -1,0 +1,619 @@
+/* ========================================
+   VARIABLES CSS
+======================================== */
+:root {
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --dark-overlay: rgba(0, 0, 0, 0.6);
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.2);
+  --border-radius: 20px;
+  --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========================================
+   CONTAINER PRINCIPAL
+======================================== */
+.home-container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+  padding-bottom: 60px;
+}
+
+/* ========================================
+   HERO SECTION
+======================================== */
+.hero-section {
+  text-align: center;
+  padding: 80px 20px 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(102, 126, 234, 0.1) 0%,
+    transparent 50%
+  );
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-title {
+  font-size: 4rem;
+  font-weight: 900;
+  color: white;
+  margin-bottom: 20px;
+  animation: fadeInDown 1s ease;
+}
+
+.gradient-text {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: 1.3rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 300;
+  animation: fadeInUp 1s ease 0.2s backwards;
+}
+
+/* ========================================
+   CAROUSEL WRAPPER
+======================================== */
+.enhanced-carousel-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+}
+
+.enhanced-carousel {
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+/* ========================================
+   CAROUSEL ITEMS
+======================================== */
+.carousel-image-container {
+  position: relative;
+  height: 75vh;
+  min-height: 600px;
+  overflow: hidden;
+}
+
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s ease;
+}
+
+.carousel-item.active .carousel-image {
+  animation: zoomIn 0.8s ease;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(1.1);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.carousel-item:hover .carousel-image {
+  transform: scale(1.05);
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.3) 40%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+}
+
+/* ========================================
+   CUSTOM CAPTION
+======================================== */
+.custom-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 60px 80px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.7) 70%,
+    transparent 100%
+  );
+  text-align: left;
+  transform: translateY(30px);
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.carousel-item.active .custom-caption {
+  transform: translateY(0);
+  opacity: 1;
+  animation: slideUp 0.8s ease 0.3s backwards;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.caption-content {
+  max-width: 900px;
+}
+
+/* ========================================
+   PROJECT BADGE & TITLE
+======================================== */
+.project-badge {
+  display: inline-block;
+  background: var(--primary-gradient);
+  color: white;
+  padding: 8px 20px;
+  border-radius: 25px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.project-title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: white;
+  margin-bottom: 15px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  line-height: 1.2;
+}
+
+.project-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.project-description {
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.8;
+  margin-bottom: 25px;
+  max-width: 800px;
+}
+
+/* ========================================
+   TECHNOLOGIES LIST
+======================================== */
+.technologies-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.tech-tag {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.tech-tag:hover {
+  background: var(--primary-gradient);
+  border-color: transparent;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
+}
+
+/* ========================================
+   ACTION BUTTONS
+======================================== */
+.project-actions {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 30px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: var(--transition);
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-btn::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.action-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.action-btn svg {
+  position: relative;
+  z-index: 1;
+}
+
+.btn-github {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.btn-github:hover {
+  background: white;
+  color: #333;
+  border-color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+}
+
+.btn-demo {
+  background: var(--primary-gradient);
+  color: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-demo:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.6);
+}
+
+/* ========================================
+   CAROUSEL CONTROLS
+======================================== */
+.enhanced-carousel .carousel-control-prev,
+.enhanced-carousel .carousel-control-next {
+  width: 60px;
+  height: 60px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.enhanced-carousel:hover .carousel-control-prev,
+.enhanced-carousel:hover .carousel-control-next {
+  opacity: 1;
+}
+
+.enhanced-carousel .carousel-control-prev {
+  left: 30px;
+}
+
+.enhanced-carousel .carousel-control-next {
+  right: 30px;
+}
+
+.enhanced-carousel .carousel-control-prev:hover,
+.enhanced-carousel .carousel-control-next:hover {
+  background: white;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.enhanced-carousel .carousel-control-prev-icon,
+.enhanced-carousel .carousel-control-next-icon {
+  filter: brightness(0) invert(1);
+}
+
+.enhanced-carousel .carousel-control-prev:hover .carousel-control-prev-icon,
+.enhanced-carousel .carousel-control-next:hover .carousel-control-next-icon {
+  filter: brightness(0);
+}
+
+/* ========================================
+   CUSTOM PROGRESS INDICATOR
+======================================== */
+.carousel-progress {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.progress-item {
+  flex: 1;
+  max-width: 100px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  transition: var(--transition);
+}
+
+.progress-item:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.progress-bar {
+  height: 100%;
+  background: var(--primary-gradient);
+  width: 0;
+  transition: width 5s linear;
+  border-radius: 10px;
+}
+
+.progress-item.active .progress-bar {
+  width: 100%;
+}
+
+/* ========================================
+   STATS SECTION
+======================================== */
+.stats-section {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  max-width: 1200px;
+  margin: 60px auto 0;
+  padding: 0 20px;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 30px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--border-radius);
+  min-width: 200px;
+  transition: var(--transition);
+}
+
+.stat-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+  border-color: rgba(102, 126, 234, 0.5);
+}
+
+.stat-number {
+  font-size: 3.5rem;
+  font-weight: 900;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stat-label {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ========================================
+   ANIMATIONS
+======================================== */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+======================================== */
+@media (max-width: 1200px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+
+  .project-title {
+    font-size: 2.5rem;
+  }
+
+  .custom-caption {
+    padding: 40px 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 60px 20px 40px;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .carousel-image-container {
+    height: 60vh;
+    min-height: 500px;
+  }
+
+  .custom-caption {
+    padding: 30px 25px;
+  }
+
+  .project-title {
+    font-size: 2rem;
+  }
+
+  .project-description {
+    font-size: 1rem;
+  }
+
+  .project-actions {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .enhanced-carousel .carousel-control-prev,
+  .enhanced-carousel .carousel-control-next {
+    width: 50px;
+    height: 50px;
+    opacity: 1;
+  }
+
+  .enhanced-carousel .carousel-control-prev {
+    left: 15px;
+  }
+
+  .enhanced-carousel .carousel-control-next {
+    right: 15px;
+  }
+
+  .stats-section {
+    gap: 30px;
+  }
+
+  .stat-item {
+    min-width: 150px;
+    padding: 25px;
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .carousel-image-container {
+    min-height: 400px;
+  }
+
+  .project-title {
+    font-size: 1.6rem;
+  }
+
+  .technologies-list {
+    gap: 8px;
+  }
+
+  .tech-tag {
+    font-size: 0.8rem;
+    padding: 6px 14px;
+  }
+
+  .carousel-progress {
+    gap: 8px;
+  }
+
+  .progress-item {
+    max-width: 60px;
+  }
+}

@@ -1,0 +1,92 @@
+#my_photo {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%; 
+  object-fit: cover; 
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3); 
+  transition: transform 0.3s ease; 
+  margin-top: 10px;
+}
+
+#my_photo:hover {
+  transform: scale(1.05); 
+}
+
+
+.header_part {
+  display: flex;
+  flex-direction: row;
+  align-items: center; 
+  justify-content: center; 
+   gap: 50px; 
+ margin: 100px 80px 20px; 
+  max-width: 1200px; 
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.photoPart {
+  flex-shrink: 0; 
+}
+
+/* Info Part - Meilleure structure */
+.infoPart {
+  flex: 1; /* Prend l'espace restant */
+}
+
+.infoPart h1 {
+  text-align: left; /* Left au lieu de center (plus pro) */
+  color: #667eea;
+  font-size: clamp(24px, 4vw, 30px); /* Responsive font */
+  font-weight: 700; /* Plus précis que "bolder" */
+  margin-bottom: 30px;
+}
+
+.infoPart ul {
+  display: flex; 
+  flex-direction: column; 
+  list-style: none; 
+  padding: 0;
+  margin: 0;
+  gap: 15px; /* Remplace margin-top sur li */
+}
+
+.infoPart em {
+  font-weight: 700;
+  color: #667eea;
+  font-style: normal; /* Retire l'italique */
+}
+
+.infoPart li {
+  font-size: 18px; /* Légèrement plus petit */
+  line-height: 1.6; /* Meilleure lisibilité */
+  color: #333; /* Ajout de couleur de texte */
+}
+
+/* Responsive - Améliorations */
+@media (max-width: 768px) {
+  .header_part {
+    flex-direction: column;
+    gap: 30px;
+    margin: 30px 15px;
+  }
+
+  .photoPart {
+    display: flex;
+    justify-content: center;
+  }
+
+  #my_photo {
+    width: 200px; /* Plus petit sur mobile */
+    height: 200px;
+  }
+
+  .infoPart h1 {
+    text-align: center; /* Centre sur mobile */
+    font-size: 24px;
+  }
+
+  .infoPart li {
+    font-size: 16px;
+  }
+}
