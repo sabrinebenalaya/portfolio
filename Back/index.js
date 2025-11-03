@@ -19,7 +19,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/', require('./Routes/indexRoute.js'));
-
+app.use('/admin', require('./Routes/adminsRoute.js'))
 // Démarrer le serveur
 app.listen(port, () => {
   console.log(`✅ Server is running on port ${port}`);

@@ -5,7 +5,7 @@ const Project = require("../Models/Project.js");
 router.get("/", async (req, res) => {
   try {
     const projects = await Project.find().sort({ date: -1 });
-    res.status(200).json(projects); // Retourne toujours 200, même si vide
+    res.status(200).json(projects); 
   } catch (error) {
     console.error("Error fetching projects:", error);
     res.status(500).json({
