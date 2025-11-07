@@ -89,7 +89,14 @@
   padding: 0 20px;
   position: relative;
 }
-
+.enhanced-carousel-wrapper a{
+ text-decoration: none; 
+  color: inherit;
+}
+.enhanced-carousel-wrapper a:hover {
+  text-decoration: none;
+  color: inherit;
+}
 .enhanced-carousel {
   border-radius: var(--border-radius);
   overflow: hidden;

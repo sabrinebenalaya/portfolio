@@ -30,6 +30,11 @@ const ProjectSchema = new Schema({
         type: Date,
         required:false,
         default: Date.now
-    }
+    },
+     admin: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Admin",
+        required: false,
+      }
 }, { timestamps: true });
 module.exports = mongoose.model("Project", ProjectSchema);

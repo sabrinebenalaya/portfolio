@@ -51,38 +51,46 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ msg: "email or password are empty" });
     }
     let admin = await Admin.findOne({ email });
-  
+
     if (!admin) {
-       return res.status(401).json({ msg: "Invalid email or password" });
+      return res.status(401).json({ msg: "Invalid email or password" });
     }
     const isMatch = await bcrypt.compare(password, admin.password);
- 
+
     if (!isMatch) {
       return res.status(401).json({ msg: "Error in Password" });
-   } 
-       let token = jwt.sign(
-        { email: admin.email, id: admin._id },
-        process.env.SECRET_KEY,
-        { expiresIn: "1w" }
-      );
-      const adminData = {
+    }
+    let token = jwt.sign(
+      { email: admin.email, id: admin._id },
+      process.env.SECRET_KEY,
+      { expiresIn: "1w" }
+    );
+    const adminData = {
       id: admin._id,
       email: admin.email,
-      name: admin.name 
+      name: admin.name,
     };
-    return res.status(200).json({ 
-      msg: "Login successful", 
-      admin: adminData, 
-      token 
+    return res.status(200).json({
+      msg: "Login successful",
+      admin: adminData,
+      token,
     });
-   
   } catch (error) {
     console.error("login error:", error);
     return res.status(500).json({ msg: "Server error during login" });
   }
 });
 
-router.put("/update-profile", authMiddleware, async (req, res) => {
- console.log("id", req.adminId)
+router.get("/get-profile/:id",authMiddleware,  async (req, res) => {
+  const response = await Admin.findById(req.params.id);
+
+  if (!response) {
+    return res.status(404).json({ msg: "Admin not founs" });
+  }
+  return res.status(200).json({ msg: " admin is found", response });
+});
+
+router.put("/update-profile", async (req, res) => {
+  console.log("id", req.adminId);
 });
 module.exports = router;

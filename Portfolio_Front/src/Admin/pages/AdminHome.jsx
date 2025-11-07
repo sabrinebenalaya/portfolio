@@ -1,9 +1,49 @@
-import React, { useEffect } from "react";
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Outlet, useParams } from "react-router-dom";
+import AdminNavBar from "../components/AdminNavBar";
+import AdminPanel from "../components/AdminPanel";
+import "../styles/AdminHome.css";
+import api from "../../Middleware/api";
+import { isAuth } from "../../Middleware/isAuth";
 function AdminHome() {
+  const { id } = useParams();
+
+const [admin, setAdmin] = useState({})
   useEffect(() => {
-  }, []);
-  return <div>AdminHome</div>;
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (token) {
+          isAuth(token);
+        } else {
+          console.error("Aucun token d'authentification trouvé");
+          return;
+        }
+
+        const response = await api.get(`/admin/get-profile/${id}`);
+        if (!response) {
+          console.log(response.data.msg);
+        }
+        setAdmin(response.data.response);
+      
+      } catch (error) {
+        console.error("Erreur lors de la récupération du profil:", error);
+      }
+    };
+    fetchProfile();
+  }, [id]);
+  console.log("Données reçues: ", admin);
+  return (
+     <div className="adminHomeContainer">
+      <AdminNavBar admin={admin} />
+      <AdminPanel admin={admin} />
+
+      <div className="mainContent">
+        <Outlet /> {/* ✅ Outlet affiche les routes enfants */}
+      </div>
+    </div>
+  );
 }
 
 export default AdminHome;

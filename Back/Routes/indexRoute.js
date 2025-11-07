@@ -1,7 +1,36 @@
 const express = require("express");
 const router = express.Router();
 const Project = require("../Models/Project.js");
-// GET ALL PROJECTS
+const authMiddleware = require("../Middleware/auth.js");
+  const multer = require('multer');
+const path = require('path');
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/') // Dossier où sauvegarder les fichiers
+  },
+  filename: function (req, file, cb) {
+    // Nom unique pour éviter les conflits
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+  }
+});
+const fileFilter = (req, file, cb) => {
+  // Autoriser seulement les images
+  console.log(file)
+  if (file.mimetype.startsWith('image/')) {
+    cb(null, true);
+  } else {
+    cb(new Error('Seules les images sont autorisées!'), false);
+  }
+};
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB max
+  }
+});
+
 router.get("/", async (req, res) => {
   try {
     const projects = await Project.find().sort({ date: -1 });
@@ -29,8 +58,12 @@ router.get("/projects/:id", async (req, res) => {
 });
 
 // add project
-router.post("/project", async (req, res) => {
-  const { name, description, linkGit, linkDep, imageUrl, technologies, date } =
+router.post("/admin/project",authMiddleware, upload.single('imageUrl'), async (req, res) => {
+
+     console.log('Fichier reçu:', req.file);
+    console.log('Données texte reçues:', req.body);
+       console.log('id admin texte reçues:', req.body.idAdmin);
+      const { name, description, linkGit, linkDep, id, technologies, date } =
     req.body;
   try {
     const newProject = new Project({
@@ -38,9 +71,10 @@ router.post("/project", async (req, res) => {
       description,
       linkGit,
       linkDep,
-      imageUrl,
+      imageUrl : req.file.path,
       technologies,
       date,
+      admin:req.body.idAdmin
     });
     const savedProject = await newProject.save();
     res.status(201).json(savedProject);

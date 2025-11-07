@@ -279,6 +279,6 @@ if (response.status === 201){
       </div>
     </div>
   );
-}
+} 
 
 export default Register;

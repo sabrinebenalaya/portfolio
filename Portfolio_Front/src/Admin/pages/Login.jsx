@@ -23,7 +23,7 @@ const navigate = useNavigate();
 const handleSubmit = async (e) => {
   e.preventDefault();
   setIsLoading(true);
-  console.log("f",formData);
+
   try {
     const response = await axios.post(`${URL_Localhost}admin/login`, formData);
     
@@ -31,7 +31,7 @@ const handleSubmit = async (e) => {
       if (response.data.token) {
         localStorage.setItem('token', response.data.token);
       }
-      navigate("/admin/");
+     navigate(`/admin/${response.data.admin?.id || ''}`);
     }
     
   } catch (error) {
