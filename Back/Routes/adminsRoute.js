@@ -90,7 +90,7 @@ router.get("/get-profile/:id",authMiddleware,  async (req, res) => {
   return res.status(200).json({ msg: " admin is found", response });
 });
 
-router.put("/update-profile", async (req, res) => {
+router.put("/update-profile",authMiddleware,  async (req, res) => {
   console.log("id", req.adminId);
 });
 module.exports = router;

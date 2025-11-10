@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useParams, useOutlet } from "react-router-dom";
 import AdminNavBar from "../components/AdminNavBar";
 import AdminPanel from "../components/AdminPanel";
 import "../styles/AdminHome.css";
@@ -34,13 +34,15 @@ const [admin, setAdmin] = useState({})
     fetchProfile();
   }, [id]);
   console.log("Données reçues: ", admin);
+    const outlet = useOutlet();
+
   return (
      <div className="adminHomeContainer">
       <AdminNavBar admin={admin} />
       <AdminPanel admin={admin} />
 
       <div className="mainContent">
-        <Outlet /> {/* ✅ Outlet affiche les routes enfants */}
+       {outlet || <div><h1>hello</h1>  </div>} 
       </div>
     </div>
   );

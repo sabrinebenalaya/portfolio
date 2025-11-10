@@ -21,29 +21,21 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Routes publiques */}
-        <Route element={<PublicLayout />}>
+        <Route path="/admin/login" element={<Login />} />
+        <Route path="/admin/forgotPassword" element={<ForgotPassword />} />
+        <Route path="/admin/register" element={<Register />} />
+
+
+         <Route element={<PublicLayout />}>
           <Route path="/" index element={<Home />} />
           <Route path="/myProjects" element={<Projects />} />
           <Route path="/aboutMe" element={<About />} />
           <Route path="/contactMe" element={<Contact />} />
         </Route>
 
-        {/* Routes admin publiques */}
-        <Route path="/admin/login" element={<Login />} />
-        <Route path="/admin/forgotPassword" element={<ForgotPassword />} />
-        <Route path="/admin/register" element={<Register />} />
 
-        {/* Routes admin protégées avec Outlet */}
-        <Route
-          path="/admin/:id"
-          element={
-            <ProtectedRoute>
-              <AdminHome />
-            </ProtectedRoute>
-          }
-        >
-          {/* Routes enfants qui s'affichent dans <Outlet /> */}
+
+        <Route path="/admin/:id" element={<ProtectedRoute><AdminHome /></ProtectedRoute>}>
           <Route path="addProject" element={<AddProject />} />
           <Route path="addCompetence" element={<AddCompetence />} />
           <Route path="addExperience" element={<AddExperience />} />

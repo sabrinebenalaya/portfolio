@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Project = require("../Models/Project.js");
+const Admin = require("../Models/Admin.js")
 const authMiddleware = require("../Middleware/auth.js");
   const multer = require('multer');
 const path = require('path');
@@ -58,29 +59,68 @@ router.get("/projects/:id", async (req, res) => {
 });
 
 // add project
-router.post("/admin/project",authMiddleware, upload.single('imageUrl'), async (req, res) => {
+router.post("/admin/project", authMiddleware, upload.single('imageUrl'), async (req, res) => {
+  console.log('Fichier reçu:', req.file);
+  console.log('Données texte reçues:', req.body);
+  console.log('id admin reçu:', req.body.idAdmin);
 
-     console.log('Fichier reçu:', req.file);
-    console.log('Données texte reçues:', req.body);
-       console.log('id admin texte reçues:', req.body.idAdmin);
-      const { name, description, linkGit, linkDep, id, technologies, date } =
-    req.body;
+  const { name, description, linkGit, linkDep, technologies, date } = req.body;
+
   try {
+    // Validation
+    if (!req.file) {
+      return res.status(400).json({ msg: "Image requise" });
+    }
+    
+    if (!req.body.idAdmin) {
+      return res.status(400).json({ msg: "idAdmin requis" });
+    }
+
+    // Création du projet
     const newProject = new Project({
       name,
       description,
       linkGit,
       linkDep,
-      imageUrl : req.file.path,
-      technologies,
+      imageUrl: req.file.path,
+      technologies: JSON.parse(technologies), // Parse si c'est un string JSON
       date,
-      admin:req.body.idAdmin
+      admin: req.body.idAdmin
     });
+
     const savedProject = await newProject.save();
-    res.status(201).json(savedProject);
+
+    // ✅ CORRECTION: Ajouter au tableau existant avec $push
+    const adminUpdated = await Admin.findByIdAndUpdate(
+      req.body.idAdmin, // ✅ Correction de la typo
+      { $push: { projects: savedProject._id } }, // ✅ $push au lieu d'écraser
+      { new: true } // Retourne le document mis à jour
+    );
+
+    // Vérification si l'admin existe
+    if (!adminUpdated) {
+      // Rollback: supprimer le projet créé si l'admin n'existe pas
+      await Project.findByIdAndDelete(savedProject._id);
+      return res.status(404).json({ msg: "Admin non trouvé" });
+    }
+
+    res.status(201).json({
+      project: savedProject,
+      admin: adminUpdated
+    });
+
   } catch (error) {
     console.error("Error adding project:", error);
-    res.status(500).json({ msg: "Error adding project" });
+    
+    // Gestion d'erreurs spécifiques
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({ 
+        msg: "Erreur de validation", 
+        details: error.message 
+      });
+    }
+    
+    res.status(500).json({ msg: "Erreur lors de l'ajout du projet" });
   }
 });
 

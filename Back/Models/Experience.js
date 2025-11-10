@@ -16,11 +16,16 @@ const ExperienceSchema = new Schema({
   },
   urlSociete: {
     type: String,
-    required: true,
+    required: false,
   },
   description: {
     type: String,
     required: true,
   },
+   admin: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Admin",
+          required: false,
+        }
 });
 module.exports = mongoose.model("Experience", ExperienceSchema);

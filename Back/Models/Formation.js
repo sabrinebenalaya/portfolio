@@ -13,6 +13,11 @@ const FormationSchema = new Schema({
   description: {
     type: String,
     required: true,
-  }
+  },
+  admin: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Admin",
+    required: false,
+  },
 });
 module.exports = mongoose.model("Formation", FormationSchema);

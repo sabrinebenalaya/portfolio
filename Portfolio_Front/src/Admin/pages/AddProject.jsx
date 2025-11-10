@@ -72,10 +72,15 @@ function AddProject() {
     formDataToSend.append('linkDep', formData.linkDep);
      formDataToSend.append('technologies', JSON.stringify(formData.technologies));
      formDataToSend.append('imageUrl', formData.imageUrl);
-     
-    console.log("formDataToSend",formDataToSend);
+     formDataToSend.append('idAdmin', idAdmin.id);
+    console.log("formDataToSend",formDataToSend.get('name'));
+    console.log("idAdmin",idAdmin);
 
-   const response =  await api.post('/admin/project', {formDataToSend, idAdmin});
+   const response =  await api.post('/admin/project',  formDataToSend, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
    console.log("rr",response);
   };
 
