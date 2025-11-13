@@ -33,7 +33,6 @@ const [admin, setAdmin] = useState({})
     };
     fetchProfile();
   }, [id]);
-  console.log("Données reçues: ", admin);
     const outlet = useOutlet();
 
   return (

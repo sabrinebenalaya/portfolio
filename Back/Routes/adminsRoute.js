@@ -4,6 +4,9 @@ const Admin = require("../Models/Admin.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const authMiddleware = require("../Middleware/auth.js");
+const Competence = require("../Models/Competence.js");
+const Formation = require("../Models/Formation.js");
+const Experience = require("../Models/Experience.js");
 
 router.post("/register", async (req, res) => {
   try {
@@ -81,16 +84,63 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/get-profile/:id",authMiddleware,  async (req, res) => {
+router.get("/get-profile/:id", authMiddleware, async (req, res) => {
   const response = await Admin.findById(req.params.id);
 
   if (!response) {
-    return res.status(404).json({ msg: "Admin not founs" });
+    return res.status(404).json({ msg: "Admin not founs", response });
   }
   return res.status(200).json({ msg: " admin is found", response });
 });
 
-router.put("/update-profile",authMiddleware,  async (req, res) => {
+router.get("/get-profile", async (req, res) => {
+  const response = await Admin.find();
+
+  if (!response) {
+    return res.status(404).json({ msg: "Admin not founs", response });
+  }
+
+  const competencesId = response[0].competences;
+  const experiencesId = response[0].experiences;
+  const formationsId = response[0].formations;
+
+  if (
+    !competencesId ||
+    (Array.isArray(competencesId) && competencesId.length === 0) ||
+    (typeof competencesId === "string" && competencesId.trim() === "") ||
+    !experiencesId ||
+    (Array.isArray(experiencesId) && experiencesId.length === 0) ||
+    (typeof experiencesId === "string" && experiencesId.trim() === "") ||
+    !formationsId ||
+    (Array.isArray(formationsId) && formationsId.length === 0) ||
+    (typeof formationsId === "string" && formationsId.trim() === "")
+  ) {
+    console.log("competencesId is empty");
+    return res.status(200).json({ msg: " admin is found", response });
+  }
+  const competencesDetails = await Promise.all(
+    competencesId.map((id) => Competence.findById(id))
+  );
+
+  const experiencesDetails = await Promise.all(
+    experiencesId.map((id) => Experience.findById(id))
+  );
+    console.log("experiencesDetails", experiencesDetails);
+
+  const formationsDetails = await Promise.all(
+    formationsId.map((id) => Formation.findById(id))
+  );
+  return res
+    .status(200)
+    .json({
+      msg: " admin is found",
+      response,
+      competencesDetails,
+      formationsDetails,
+      experiencesDetails,
+    });
+});
+router.put("/update-profile", authMiddleware, async (req, res) => {
   console.log("id", req.adminId);
 });
 module.exports = router;

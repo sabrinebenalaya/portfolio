@@ -6,12 +6,12 @@ import { useParams } from "react-router-dom";
 
 const AddFormation = () => {
   const adminId = useParams();
-
+  const { id } = adminId;
   const [formData, setFormData] = useState({
     year: "",
     title: "",
     description: "",
-    id: adminId,
+    id: id,
   });
 
   const [errors, setErrors] = useState({});
@@ -57,8 +57,8 @@ const AddFormation = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await api.post("/admin/formation/add", formData);
-      console.log("response", response);
+      const response = await api.post(`/admin/formation/add/${id}`, formData);
+
       // Afficher le message de succès
       setShowSuccess(true);
 

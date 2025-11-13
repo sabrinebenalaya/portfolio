@@ -8,6 +8,7 @@ function AddExperience() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
   const adminId = useParams();
+  const {id}=adminId;
   const [formData, setFormData] = useState({
     year: "",
     post: "",
@@ -61,7 +62,7 @@ function AddExperience() {
 
     setIsSubmitting(true);
     try {
-      const response = await api.post("/admin/experience/add", formData);
+      const response = await api.post(`/admin/experience/add/${id}`, formData);
       setShowSuccess(true);
 
       // Réinitialiser le formulaire
@@ -174,7 +175,7 @@ function AddExperience() {
         </div>
 
         <button type="submit" className="submit-btn" disabled={isSubmitting}>
-          {isSubmitting ? "Envoi en cours..." : "Ajouter la Formation"}
+          {isSubmitting ? "Envoi en cours..." : "Ajouter l'experience"}
         </button>
       </form>
     </div>

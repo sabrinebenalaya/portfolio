@@ -1,28 +1,29 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
+import { URL_Localhost } from "../../config";
+import axios from "axios";
 function Experience() {
-  const experiences = [
-    {
-      year: "DEPUIS 2017",
-      post: "CONSEILLERE CLIENT",
-      societe: "TELEPERFORMANCE, TUNISIE",
-      urlSociete: "https://www.tp.com/fr-tn/emplacements/tunisia/",
-      description: `J’ai acquis une expérience en assistance commerciale et technique en
-            représentant plusieurs fournisseurs d’accès à Internet, ce qui m’a
-            permis de développer des compétences en relation client, en
-            résolution de problèmes et en accompagnement personnalisé.`,
-    },
-    {
-      year: "DEPUIS 2017",
-      post: "CONSEILLERE CLIENT",
-      societe: "TELEPERFORMANCE, TUNISIE",
-      urlSociete: "https://www.tp.com/fr-tn/emplacements/tunisia/",
-      description: `J’ai acquis une expérience en assistance commerciale et technique en
-            représentant plusieurs fournisseurs d’accès à Internet, ce qui m’a
-            permis de développer des compétences en relation client, en
-            résolution de problèmes et en accompagnement personnalisé.`,
-    },
-  ];
+  const [experiences, setExperiences] = useState([]);
+
+    const fetchExperiences = async (id) => {
+      try {
+        const response = await axios.get(`${URL_Localhost}admin/get-profile`);
+        if (!response || !response.data.experiencesDetails) {
+          console.log("erreur de donne");
+        } else {
+          setExperiences(response.data.experiencesDetails);
+
+        }
+      } catch (error) {
+        console.error("Erreur:", error.response?.data || error.message);
+        throw error;
+      }
+    };
+  
+    useEffect(() => {
+      fetchExperiences();
+
+    }, []);
+
 
   return (
     <div className="container">

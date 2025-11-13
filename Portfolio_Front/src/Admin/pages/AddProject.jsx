@@ -5,7 +5,6 @@ import api from "../../Middleware/api";
 import { useParams } from "react-router-dom";
 function AddProject() {
   const idAdmin = useParams();
-  console.log("id",idAdmin)
  const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -62,7 +61,7 @@ function AddProject() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Projet à enregistrer:", formData);
+    
     
     // Ici, ajoutez votre logique d'envoi au backend
      const formDataToSend = new FormData();

@@ -4,9 +4,10 @@ const Experience = require("../Models/Experience");
 const Admin = require("../Models/Admin");
 const authMiddleware = require("../Middleware/auth.js");
 
-router.post("/add", authMiddleware, async (req, res) => {
+router.post("/add/:id", authMiddleware, async (req, res) => {
   console.log("body", req.body);
-  const { year, post, societe, urlSociete, description, id } = req.body;
+  const id = req.params.id;
+  const { year, post, societe, urlSociete, description } = req.body;
   try {
     const newExperience = new Experience({
       year,

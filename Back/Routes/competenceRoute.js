@@ -4,14 +4,13 @@ const Competence = require("../Models/Competence.js");
 const Admin = require("../Models/Admin.js");
 const authMiddleware = require("../Middleware/auth.js");
 
-router.post("/add", authMiddleware, async (req, res) => {
-  const { competence, id } = req.body;
-
-  console.log("competence, id", competence, id);
+router.post("/add/:id", authMiddleware, async (req, res) => {
+  const { name } = req.body;
+const id  = req.params.id;
 
   try {
        const newCompetence = new Competence({
-          name:competence,
+          name,
           admin:id
         });
     const savedCompetence = await newCompetence.save();
@@ -36,5 +35,7 @@ router.post("/add", authMiddleware, async (req, res) => {
     return res.status(500).json({msg: error});
   }
 });
+
+
 
 module.exports = router;
